@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  ul li {
+    display: flex;
+    border-radius: 10px;
+    justify-content: space-between;
+
+    margin-right: 35px;
+    padding: 5px;
+  }
+
+  ul li:hover {
+    display: flex;
+
+    background: #e5e9f74d;
+    border-radius: 10px;
+    justify-content: space-between;
+
+    padding: 5px;
+    margin-right: 35px;
+  }
+
+  p {
+    color: #bbbbbb;
+  }
+}
+
+.nameCity {
+  line-height: 5px;
+}
+
+.infoCity {
+  display: flex;
+  align-items: center;
+
+  margin-left: 190px;
+}
