@@ -1,38 +1,34 @@
 import React from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import City from "../../components/City/City";
 import Search from "../../components/Search/Search";
 import styles from "../Main/Main.module.scss";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCities,
+  setSearchCity,
+  setSearchResults,
+} from "../.././redux/slice/citySlice";
+
 const Main = () => {
-  const [cities, setCities] = React.useState([]);
-  const [searchCity, setSearchCity] = React.useState("");
-  const [searchResults, setSearchResults] = React.useState([]);
+  const dispatch = useDispatch();
+  const cities = useSelector((state) => state.cities.data);
+  const searchCity = useSelector((state) => state.cities.searchCity);
+  const searchResults = useSelector((state) => state.cities.searchResults);
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://76e7bf6bc395f60b.mokky.ru/cities"
-        );
-
-        setCities(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    fetchData();
-  }, []);
+    dispatch(fetchCities());
+  }, [dispatch]);
 
   const handleSearchCity = (event) => {
     const value = event.target.value;
-    setSearchCity(value);
+    dispatch(setSearchCity(value));
 
     const filteredCities = cities.filter((city) =>
       city.cityName.toLowerCase().includes(value.toLowerCase())
     );
-    setSearchResults(filteredCities);
+    dispatch(setSearchResults(filteredCities));
   };
 
   return (
