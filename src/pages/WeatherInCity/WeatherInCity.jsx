@@ -1,27 +1,18 @@
 import React from "react";
-import axios from "axios";
 import clsx from "clsx";
 import styles from "./WeatherInCity.module.scss";
 import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCities } from "../../redux/slice/citySlice";
 
 const WeatherInCity = () => {
-  const [cities, setCities] = React.useState([]);
+  const dispatch = useDispatch();
+  const cities = useSelector((state) => state.cities.data);
   const { cityName, degree, typeWeather } = useParams();
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(
-          "https://76e7bf6bc395f60b.mokky.ru/cities"
-        );
-
-        setCities(data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    fetchData();
-  }, []);
+    dispatch(fetchCities());
+  }, [dispatch]);
 
   return (
     <div className={styles.container}>
